@@ -1,34 +1,58 @@
-# Bytecode de Python
+# === Python basics ===
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.pdb
+*.egg-info/
+*.egg
+*.log
 
-# Entornos virtuales
+# === Virtual environments ===
 venv/
+env/
+.venv/
 .env/
 
-# Archivos de log
-execution.log
+# === OS-specific files ===
 
-# Archivos generados por el sandbox
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# === IDE / Editor settings ===
+.vscode/
+.idea/
+*.iml
+
+# === Pytest / test cache ===
+.pytest_cache/
+.tox/
+coverage/
+htmlcov/
+.coverage
+.coverage.*
+
+# === Project structure specific ===
+# Sandbox inputs and outputs (NOT code)
 sandbox/in/*
 sandbox/out/*
+
+# Keys — NEVER upload real cryptographic keys
 sandbox/keys/*
 
-# No ignorar los .keep necesarios
-!sandbox/in/.keep
-!sandbox/out/.keep
-!sandbox/keys/.keep
+# Execution logs
+execution.log
 
-# Escrow (mantener carpeta pero ignorar archivos)
-escrow/*
-!escrow/.keep
-
-# Archivos de pruebas
-*.log
+# Compiled artifacts or temporary metrics
 *.tmp
+*.swp
+*.swo
 
-# Archivos del sistema
-.DS_Store
-Thumbs.db
+# === Build artifacts ===
+build/
+dist/
