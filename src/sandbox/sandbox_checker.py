@@ -1,9 +1,10 @@
-# src/sandbox/sandbox_checker.py
 from pathlib import Path
 import sys
 import os
+import subprocess
 
-# Root sandbox relative to repo root (assume repo root is two levels up from this file)
+
+# Root de sandbox 
 SANDBOX_ROOT = Path(__file__).resolve().parents[2] / "sandbox"
 
 def ensure_sandbox_exists():
@@ -13,12 +14,9 @@ def ensure_sandbox_exists():
     (SANDBOX_ROOT / "keys").mkdir(exist_ok=True)
 
 def ensure_in_sandbox(path_like):
-    """
-    Verifica que la ruta resuelta esté dentro de sandbox. Si no, aborta con código 2.
-    path_like: str or Path
-    """
+   
     p = Path(path_like)
-    # Si es relativo, interpretarlo respecto al cwd
+   
     try:
         p_resolved = p.resolve()
     except Exception:
@@ -35,3 +33,14 @@ def is_in_sandbox(path_like):
     except Exception:
         p_resolved = (Path.cwd() / Path(path_like)).resolve()
     return str(p_resolved).startswith(str(SANDBOX_ROOT.resolve()))
+
+def test_block_out_of_sandbox():
+   
+    outside = Path("outside.tmp")
+    outside.write_bytes(b"data")
+    r = subprocess.run([sys.executable, "-m", "src.cli", "encrypt",
+                        "--infile", str(outside), 
+                        "--outfile", "sandbox/out/x.enc",
+                        "--keyfile", "sandbox/keys/secret.key"], capture_output=True, text=True)
+    assert r.returncode != 0
+    assert "fuera de sandbox" in r.stdout.lower() or "ruta fuera de sandbox" in r.stdout.lower()

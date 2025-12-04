@@ -1,8 +1,7 @@
 # src/escrow.py
-"""
-Módulo para generar clave RSA demo y cifrar la clave maestra para recovery (escrow).
-Utiliza PyCryptodome solo para la operación RSA demo.
-"""
+
+"Módulo para generar clave RSA demo y cifrar la clave maestra para recovery (escrow)."
+
 from pathlib import Path
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
@@ -22,10 +21,9 @@ def generate_rsa_demo(bits: int = 2048):
     return priv, pub
 
 def create_recovery_enc(master_key: bytes, pubkey_pem: bytes = None):
-    """
-    Cifra master_key con RSA OAEP usando pubkey_pem (si no se provee, usa demo pub).
-    Guarda el resultado en escrow/recovery.enc
-    """
+  
+    "Cifra master_key"
+    
     if pubkey_pem is None:
         if not DEMO_PUB.exists():
             generate_rsa_demo()
