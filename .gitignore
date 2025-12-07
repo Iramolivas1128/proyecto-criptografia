@@ -15,7 +15,6 @@ env/
 .env/
 
 # === OS-specific files ===
-
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -37,16 +36,11 @@ htmlcov/
 .coverage
 .coverage.*
 
-# === Project structure specific ===
-# Sandbox inputs and outputs (NOT code)
-sandbox/in/*
-sandbox/out/*
+# === Sandbox — NO ignorar, subir todo ===
+sandbox/
 
-# Keys — NEVER upload real cryptographic keys
+# Keys — opcional: mantener ignoradas si contienen datos sensibles
 sandbox/keys/*
-
-# Execution logs
-execution.log
 
 # Compiled artifacts or temporary metrics
 *.tmp
