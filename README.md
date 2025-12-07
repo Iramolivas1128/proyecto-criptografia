@@ -31,11 +31,17 @@ python -m src.cli init
 ```
 3.- Cifrar
 ```bash
-python -m src.cli encrypt --infile sandbox/in/file.txt --outfile sandbox/out/file.enc --keyfile sandbox/keys/key.bin
+python -m src.cli encrypt \
+    --infile sandbox/in/prueba2.txt \
+    --outfile sandbox/out/prueba2.txt.enc \
+    --keyfile sandbox/keys/key.bin
 ```
 4.- Descifrar
 ```bash
-python -m src.cli decrypt --infile sandbox/out/file.enc --outfile sandbox/out/file_dec.txt --keyfile sandbox/keys/key.bin
+python -m src.cli decrypt \
+    --infile sandbox/out/prueba2.txt.enc \
+    --outfile sandbox/out/prueba_decrypted2.txt \
+    --keyfile sandbox/keys/key.bin
 ```
 5.- Ejecutar pruebas
 ```
