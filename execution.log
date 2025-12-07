@@ -1,0 +1,39 @@
+(base) josevictorio@MacBook-Air-de-Jose proyecto-criptografia % python -m src.cli init                      
+python -m src.cli encrypt --infile sandbox/in/prueba.txt --outfile sandbox/out/prueba.txt.enc --keyfile sandbox/keys/key.bin
+python -m src.cli decrypt --infile sandbox/out/prueba.txt.enc --outfile sandbox/out/prueba_descifrada.txt --keyfile sandbox/keys/key.bin
+
+Init completado.
+Clave maestra escrita en /Users/josevictorio/Documents/GitHub/proyecto-criptografia/sandbox/keys/secret.key
+Escrow demo generado en escrow/recovery.enc (demo_private.pem/demo_public.pem en escrow/)
+Cifrado OK -> /Users/josevictorio/Documents/GitHub/proyecto-criptografia/sandbox/out/prueba.txt.enc
+Descifrado OK -> /Users/josevictorio/Documents/GitHub/proyecto-criptografia/sandbox/out/prueba_descifrada.txt
+(base) josevictorio@MacBook-Air-de-Jose proyecto-criptografia % PYTHONPATH=. pytest tests/test_avalanche.py -q
+F                                                                                                                              [100%]
+============================================================== FAILURES ==============================================================
+_____________________________________________________ test_avalanche_statistical _____________________________________________________
+
+    def test_avalanche_statistical():
+        key = secrets.token_bytes(KEY_SIZE)
+        msg = b"A" * 256
+        def cfn(k,m):
+            iv = b'\x00' * 16  # IV fijo
+            return encrypt_cbc(k, m, iv)
+        results = avalanche_test(cfn, key, msg, flips=256)  # 256 flips
+        mean = statistics.mean(results)
+        stdev = statistics.pstdev(results)
+>       assert abs(mean - 0.5) < 0.06, f"Avalanche mean outside tolerance: {mean}"
+E       AssertionError: Avalanche mean outside tolerance: 0.030465518727022058
+E       assert 0.4695344812729779 < 0.06
+E        +  where 0.4695344812729779 = abs((0.030465518727022058 - 0.5))
+
+tests/test_avalanche.py:15: AssertionError
+====================================================== short test summary info =======================================================
+FAILED tests/test_avalanche.py::test_avalanche_statistical - AssertionError: Avalanche mean outside tolerance: 0.030465518727022058
+1 failed in 0.29s
+(base) josevictorio@MacBook-Air-de-Jose proyecto-criptografia % PYTHONPATH=. pytest tests/test_entropy.py -q  
+.                                                                                                                              [100%]
+1 passed in 0.02s
+(base) josevictorio@MacBook-Air-de-Jose proyecto-criptografia % PYTHONPATH=. pytest tests/test_sandbox.py -q
+.                                                                                                                              [100%]
+1 passed in 1.02s
+(base) josevictorio@MacBook-Air-de-Jose proyecto-criptografia % 
